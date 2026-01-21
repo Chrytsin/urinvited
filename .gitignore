@@ -1,0 +1,14 @@
+# OS / Editor
+.DS_Store
+.vscode/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# Future tooling
+node_modules/
+dist/
