@@ -54,5 +54,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - Σύνδεση RSVP φόρμας
 - Προσθήκη Cloudinary upload widget
 - Gallery εμφάνιση φωτογραφιών
+- Visual polish & branding
 
-Visual polish & branding
+*Environment variables are managed locally via .env and excluded from version control.
