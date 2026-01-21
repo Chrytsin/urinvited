@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>urinvited</title>
+  <meta name="description" content="Online προσκλητήριο για γάμο ή βάπτιση. Δήλωση παρουσίας και κοινόχρηστο άλμπουμ αναμνήσεων." />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="hero">
+    <h1>You're Invited</h1>
+    <p class="subtitle">
+      Ένα online προσκλητήριο για τις πιο όμορφες στιγμές
+    </p>
+  </header>
+
+  <main>
+
+    <section class="card">
+      <h2>Το Event</h2>
+      <p>
+        Με μεγάλη μας χαρά σας προσκαλούμε να γιορτάσετε μαζί μας.
+      </p>
+      <ul>
+        <li><strong>Ημερομηνία:</strong> 20 Ιουλίου 2026</li>
+        <li><strong>Τοποθεσία:</strong> Αθήνα</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Δήλωση Παρουσίας</h2>
+      <p>
+        Παρακαλούμε ενημερώστε μας αν θα μπορέσετε να παρευρεθείτε.
+      </p>
+
+      <!-- RSVP form (θα το συνδέσουμε με Formspree στο επόμενο βήμα) -->
+      <form id="rsvp-form">
+        <input type="text" name="name" placeholder="Ονοματεπώνυμο" required />
+        <select name="attendance" required>
+          <option value="">Θα παρευρεθώ;</option>
+          <option value="yes">Ναι</option>
+          <option value="no">Όχι</option>
+        </select>
+        <button type="submit">Αποστολή</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Φωτογραφίες & Αναμνήσεις</h2>
+      <p>
+        Σύντομα θα μπορείτε να ανεβάσετε τις φωτογραφίες σας από το event.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 urinvited · Built with GitHub Pages
+    </p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
