@@ -1,8 +1,11 @@
 # URINVITED (You Are Invited) 
 A mobile‑friendly event invitation platform for weddings and baptisms, featuring online RSVP and guest photo uploads using a static frontend architecture.
 
+# Live Demo
+Το project φιλοξενείται μέσω GitHub Pages: https://chrytsin.github.io/urinvited/
+
 # Overview 
-urinvited είναι ένα static web project που λειτουργεί ως online προσκλητήριο και event microsite. Σχεδιάστηκε ώστε να μπορεί να χρησιμοποιηθεί τόσο ως πραγματικό event site όσο και ως portfolio case study.
+Το urinvited είναι ένα static web project που λειτουργεί ως online προσκλητήριο και event microsite. Σχεδιάστηκε ώστε να μπορεί να χρησιμοποιηθεί τόσο ως πραγματικό event site όσο και ως portfolio case study.
 
 # Features
 - Online προσκλητήριο για γάμο ή βάπτιση
@@ -18,9 +21,8 @@ urinvited είναι ένα static web project που λειτουργεί ως 
 - Formspree (RSVP form handling)
 
 # Architecture
-Το project ακολουθεί static‑first αρχιτεκτονική:
-
-Δεν υπάρχει backend ή database
+Το project ακολουθεί static‑first αρχιτεκτονική: 
+- Δεν υπάρχει backend ή database
 - Όλες οι δυναμικές λειτουργίες υλοποιούνται μέσω τρίτων υπηρεσιών
 - Βελτιστοποιημένο για performance και απλό deployment
 
@@ -33,9 +35,6 @@ urinvited είναι ένα static web project που λειτουργεί ως 
 │  └─ main.js
 └─ assets/
    └─ images/
-
-# Live Demo
-Το project φιλοξενείται μέσω GitHub Pages.
 
 # LICENSE
 MIT License
