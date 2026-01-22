@@ -26,20 +26,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("rsvp-form");
   if (!form) return;
 
-  form.addEventListener("submit", (e) => {
+  
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
+  
     const button = form.querySelector("button");
     const originalText = button.textContent;
-
-    button.textContent = "Εστάλη ✨";
+  
+    button.textContent = "Αποστολή...";
     button.disabled = true;
-
+  
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: {
+          Accept: "application/json"
+        }
+      });
+  
+      if (response.ok) {
+        button.textContent = "Εστάλη ✨";
+        form.reset();
+      } else {
+        throw new Error("Submission failed");
+      }
+  
+    } catch (error) {
+      button.textContent = "Σφάλμα 😕";
+    }
+  
     setTimeout(() => {
       button.textContent = originalText;
       button.disabled = false;
-      form.reset();
-    }, 2000);
+    }, 2500);
   });
+
 
 });
