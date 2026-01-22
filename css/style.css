@@ -139,3 +139,47 @@ footer {
     transform: translateY(0);
   }
 }
+
+/* Countdown */
+.countdown-section {
+  text-align: center;
+  padding: 5rem 1rem 3rem;
+}
+
+.countdown-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.time-box {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  padding: 1.5rem 1.8rem;
+  min-width: 110px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  transition: transform 0.4s ease;
+}
+
+.time-box:hover {
+  transform: translateY(-6px);
+}
+
+.time-box span {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+.time-box small {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
