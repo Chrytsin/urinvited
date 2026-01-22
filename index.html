@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Urinvited - You Are Invited To Our Wedding</title>
+  <title>Κ&Κ - You Are Invited To Our Wedding</title>
   <meta name="description" content="You Are Invited - Ένα online προσκλητήριο για την πιο ξεχωριστή ημέρα της ζωής σας! Προσκαλέστε τους αγαπημένους σας και δώστε τους τη δυνατότητα να επιβεβαιώσουν εύκολα αν θα παρευρεθούν δίπλα σας την ημέρα εκείνη, αλλά και να μοιραστούν φωτογραφίες από αυτή την πολύτιμη στιγμή σας σε ένα κοινόχρηστο άλμπουμ αναμνήσεων." />
   <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -48,14 +48,16 @@
       <p>
         Θα χαρούμε πολύ να μας τιμήσετε με την παρουσία σας! Παρακαλούμε ενημερώστε μας έγκαιρα αν θα μπορέσετε να παρευρεθείτε.
       </p>
-
       <!-- RSVP form (θα το συνδέσουμε με Formspree στο επόμενο βήμα) -->
-      <form id="rsvp-form">
+      <form
+        id="rsvp-form"
+        action="https://formspree.io/f/xaqqlzzl"
+        method="POST"
+      >
         <input type="text" name="name" placeholder="Ονοματεπώνυμο" required />
         <select name="attendance" required>
-          <option value="">Θα παρευρεθώ;</option>
-          <option value="yes">Ναι</option>
-          <option value="no">Όχι</option>
+          <option value="yes">Ναι, Θα παρευρεθώ</option>
+          <option value="no">Όχι, δεν Θα παρευρεθώ</option>
         </select>
         <button type="submit">Αποστολή</button>
       </form>
