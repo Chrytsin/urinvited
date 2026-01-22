@@ -90,10 +90,14 @@ if (daysEl && hoursEl && minutesEl && secondsEl) {
       return;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((distance / (1000 * 60)) % 60);
-    const seconds = Math.floor((distance / 1000) % 60);
+    const totalSeconds = Math.floor(distance / 1000);
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const totalHours = Math.floor(totalMinutes / 60);
+    const days = Math.floor(totalHours / 24);
+    
+    const hours = totalHours % 24;
+    const minutes = totalMinutes % 60;
+    const seconds = totalSeconds % 60;
 
     daysEl.textContent = days.toString().padStart(2, "0");
     hoursEl.textContent = hours.toString().padStart(2, "0");
