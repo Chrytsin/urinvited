@@ -63,7 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   
-const weddingDate = new Date("2026-07-04T19:00:00").getTime();
+const weddingDate = new Date(
+  2026, // έτος
+  6,    // μήνας
+  4,    // ημέρα
+  19,   // ώρα
+  0,    // λεπτά
+  0     // δευτερόλεπτα
+).getTime();
 
 const daysEl = document.getElementById("days");
 const hoursEl = document.getElementById("hours");
