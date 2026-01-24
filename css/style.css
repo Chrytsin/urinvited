@@ -220,7 +220,7 @@ footer {
 .map-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -242,22 +242,22 @@ footer {
   top: 0;
   left: 0;
   width: 100%;
-  height: 72px;
-  padding: 0 1.5rem;
+  height: 80px;
+  padding: 0 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
   z-index: 1000;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .site-header.scrolled {
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-/* ========= Logo ========= */
+/* ======== Logo ========== */
 
 .logo {
   font-family: "Playfair Display", serif;
@@ -265,58 +265,64 @@ footer {
   font-style: italic;
   letter-spacing: 0.08em;
   white-space: nowrap;
+  line-height: 1;
 }
 
-/* ======== Desktop menu ============ */
+/* ======== Desktop menu ======== */
 
 .nav ul {
-  list-style: none;
   display: flex;
-  gap: 2rem;
   align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .nav a {
   font-family: "Inter", sans-serif;
   font-size: 0.85rem;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  text-decoration: none;
   color: #222;
+  text-decoration: none;
+  line-height: 1;
+  padding: 0.5rem 0;
   position: relative;
   white-space: nowrap;
-  padding: 0.25rem 0;
 }
 
-/* underline animation */
+
 .nav a::after {
   content: "";
   position: absolute;
-  left: 50%;
-  bottom: -4px;
-  width: 0;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
   height: 1px;
   background: #222;
-  transform: translateX(-50%);
-  transition: width 0.35s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
 }
 
 .nav a:hover::after,
 .nav a.active::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 /* ========= Hamburger menu =========== */
 
 .menu-toggle {
   display: none;
-  width: 28px;
-  height: 20px;
+  width: 32px;
+  height: 22px;
   background: none;
   border: none;
   cursor: pointer;
   position: relative;
+  z-index: 1100;
 }
 
 .menu-toggle span {
@@ -325,14 +331,14 @@ footer {
   width: 100%;
   height: 2px;
   background: #222;
-  transition: all 0.35s ease;
+  transition: transform 0.35s ease, opacity 0.25s ease;
 }
 
 .menu-toggle span:nth-child(1) { top: 0; }
-.menu-toggle span:nth-child(2) { top: 9px; }
+.menu-toggle span:nth-child(2) { top: 10px; }
 .menu-toggle span:nth-child(3) { bottom: 0; }
 
-/* ========= Mobile menu ========== */
+/* ======== Mobile menu =========== */
 
 @media (max-width: 768px) {
 
@@ -343,42 +349,38 @@ footer {
   .nav {
     position: fixed;
     inset: 0;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(18px);
+    background: #fdfaf7;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
+    transform: translateY(10px);
     pointer-events: none;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
 
   .nav.open {
     opacity: 1;
+    transform: translateY(0);
     pointer-events: auto;
   }
 
   .nav ul {
     flex-direction: column;
-    gap: 2rem;
+    gap: 2.2rem;
   }
 
   .nav a {
     font-family: "Playfair Display", serif;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     font-style: italic;
+    letter-spacing: 0.04em;
     text-transform: none;
-    letter-spacing: 0.05em;
-  }
-
-  .nav a::after {
-    bottom: -6px;
   }
 }
 
 .nav.open ~ .menu-toggle span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 9px;
+  transform: rotate(45deg) translateY(10px);
 }
 
 .nav.open ~ .menu-toggle span:nth-child(2) {
@@ -386,9 +388,11 @@ footer {
 }
 
 .nav.open ~ .menu-toggle span:nth-child(3) {
-  transform: rotate(-45deg);
-  bottom: 9px;
+  transform: rotate(-45deg) translateY(-10px);
 }
+
+
+
 
 
 /* ========= Scroll ========= */
