@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  //================ Animations ================ 
   const cards = document.querySelectorAll(".card");
 
   cards.forEach(card => {
@@ -23,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
   revealOnScroll();
 
 
+
+  //================ RSRV form ================ 
   const form = document.getElementById("rsvp-form");
   if (!form) return;
 
@@ -62,7 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 2500);
   });
 
-  
+
+//================ Countdown timer ================ 
 const weddingDate = new Date(
   2026, // έτος
   6,    // μήνας
@@ -108,5 +112,67 @@ if (daysEl && hoursEl && minutesEl && secondsEl) {
   updateCountdown();
   setInterval(updateCountdown, 1000);
 }
+
+
+//================ Navigation menu ===================
+const toggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".nav");
+const header = document.querySelector(".site-header");
+
+if (toggle && nav) {
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("open");
+  });
+
+  nav.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      nav.classList.remove("open");
+    });
+  });
+}
+
+// Close menu when clicking outside (mobile)
+document.addEventListener("click", (e) => {
+  if (
+    nav &&
+    toggle &&
+    !nav.contains(e.target) &&
+    !toggle.contains(e.target)
+  ) {
+    nav.classList.remove("open");
+  }
+});
+
+// Header shadow on scroll
+window.addEventListener("scroll", () => {
+  if (!header) return;
+  header.classList.toggle("scrolled", window.scrollY > 20);
+});
+
+// Active link per section
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".nav a");
+
+const setActiveLink = () => {
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 120;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("active");
+    if (link.getAttribute("href") === `#${current}`) {
+      link.classList.add("active");
+    }
+  });
+};
+
+window.addEventListener("scroll", setActiveLink);
+setActiveLink();
+
   
 });
