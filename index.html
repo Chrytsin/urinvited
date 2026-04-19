@@ -14,30 +14,50 @@
 </head>
   
 <body>
-  <header class="site-header">
-    <div class="logo">Κ&Κ</div>
-  
-    <nav class="nav">
+  <!-- Floating petals -->
+  <div class="petals-container" aria-hidden="true" id="petals-container"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header" id="site-header">
+    <div class="header-top">
+      <div class="logo">Κ<span class="logo-amp">&</span>Κ</div>
+    </div>
+    <nav class="nav" id="main-nav" aria-label="Κύρια πλοήγηση">
       <ul>
         <li><a href="#couple">Το Ζεύγος</a></li>
         <li><a href="#wedding">Ο Γάμος</a></li>
         <li><a href="#event">Η Δεξίωση</a></li>
-        <li><a href="#form">Ενημέρωση Παρουσίας</a></li>
-        <li><a href="#photo">Προσθήκη Φωτογραφιών</a></li>
-        <li><a href="#list">Λίστα Γάμου</a></li>
+        <li><a href="#form">Παρουσία</a></li>
+        <li><a href="#gallery">Γκαλερί</a></li>
+        <li><a href="#photo">Φωτογραφίες</a></li>
+        <li><a href="#list">Λίστα</a></li>
         <li><a href="#contact">Επικοινωνία</a></li>
       </ul>
     </nav>
-  
-
-    <button class="menu-toggle" aria-label="Άνοιγμα μενού">
-    <span></span>
-    <span></span>
-    <span></span>
-    </button>
-    
+    <div class="mobile-bar">
+      <div class="logo mobile-logo">Κ<span class="logo-amp">&</span>Κ</div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
-  
+ 
+  <!-- Mobile nav -->
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <nav class="nav-mobile" aria-label="Mobile πλοήγηση">
+      <ul>
+        <li><a href="#couple">Το Ζεύγος</a></li>
+        <li><a href="#wedding">Ο Γάμος</a></li>
+        <li><a href="#event">Η Δεξίωση</a></li>
+        <li><a href="#form">Παρουσία</a></li>
+        <li><a href="#gallery">Γκαλερί</a></li>
+        <li><a href="#photo">Φωτογραφίες</a></li>
+        <li><a href="#list">Λίστα</a></li>
+        <li><a href="#contact">Επικοινωνία</a></li>
+      </ul>
+    </nav>
+  </div>
+ 
   <main>
     <section class="hero">
       <h1>Κ&Κ</h1>
@@ -138,27 +158,52 @@
       <p>
         Θα χαρούμε πολύ να μας τιμήσετε με την παρουσία σας! Παρακαλούμε ενημερώστε μας έγκαιρα αν θα μπορέσετε να παρευρεθείτε.
       </p>
-      <!-- RSVP form -->
-      <form
-        id="rsvp-form"
-        action="https://formspree.io/f/xaqqlzzl"
-        method="POST"
-      >
-        <input type="text" name="name" placeholder="Ονοματεπώνυμο" required />
-        <select name="attendance" required>
-          <option value="yes">Ναι, Θα παρευρεθώ</option>
-          <option value="no">Όχι, δεν Θα παρευρεθώ</option>
-        </select>
-        <button type="submit">Αποστολή</button>
+    
+    <!-- RSVP form -->
+    <form id="rsvp-form" action="https://formspree.io/f/xaqqlzzl" method="POST" novalidate>
+        <div class="form-field">
+          <label for="rsvp-name">Ονοματεπώνυμο</label>
+          <input type="text" id="rsvp-name" name="name" placeholder="π.χ. Μαρία Παπαδοπούλου" autocomplete="name" required />
+        </div>
+        <div class="form-field">
+          <label for="rsvp-attendance">Θα παρευρεθείτε;</label>
+          <select id="rsvp-attendance" name="attendance" required>
+            <option value="" disabled selected>Επιλέξτε...</option>
+            <option value="yes">✓ Ναι, θα παρευρεθώ</option>
+            <option value="no">✗ Όχι, δεν θα μπορέσω να παρευρεθώ</option>
+          </select>
+        </div>
+        <div class="form-field" id="guests-field" hidden>
+          <label for="rsvp-guests">Αριθμός συνόλου ατόμων</label>
+          <input type="number" id="rsvp-guests" name="guests" min="1" max="10" value="1" />
+        </div>
+        <div class="form-field">
+          <label for="rsvp-message">Μήνυμα <span class="optional">(προαιρετικό)</span></label>
+          <textarea id="rsvp-message" name="message" placeholder="Γράψτε εδώ ένα μήνυμα που θέλετε να μεταφέρετε στο ζευγάρι..." rows="3"></textarea>
+        </div>
+        <div id="rsvp-feedback" class="rsvp-feedback" aria-live="polite" hidden></div>
+        <button type="submit" id="rsvp-submit">Αποστολή</button>
       </form>
     </section>
-
-    <section id="photo" class="card">
-      <h2>Φωτογραφίες & Αναμνήσεις</h2>
-      <p>
-        Μοιραστείτε μαζί μας το υλικό από την ξεχωριστή αυτή ημέρα! Σύντομα θα μπορείτε να ανεβάσετε τις φωτογραφίες σας από το event.
-      </p>
-      <!-- Photo uploads -->
+    
+    <!-- ===== PHOTO UPLOAD ===== -->
+    <section id="photo" class="card" data-reveal>
+      <h2>Φωτογραφίες &amp; Αναμνήσεις</h2>
+      <p>Μοιραστείτε μαζί μας τις αναμνήσεις που κρατήσατε από αυτή την ξεχωριστή ημέρα!</p>
+      <div class="upload-area" id="upload-area">
+        <div class="upload-icon">📷</div>
+        <p class="upload-label">Σύρετε φωτογραφίες εδώ ή επιλέξτε αρχεία</p>
+        <p class="upload-hint">JPG · PNG · HEIC &nbsp;·&nbsp; έως 20MB ανά αρχείο</p>
+        <button class="upload-btn" id="upload-btn" type="button">Επιλογή Φωτογραφιών</button>
+        <input type="file" id="photo-input" accept="image/*" multiple hidden />
+      </div>
+      <div id="upload-list" class="upload-list" hidden></div>
+      <div
+        id="cloudinary-config"
+        data-cloudinary-cloud="dbgeqsztv"
+        data-cloudinary-preset="allmedia"
+        hidden>
+      </div>
     </section>
 
     <section id="list" class="card">
