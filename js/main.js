@@ -175,4 +175,106 @@ window.addEventListener("scroll", setActiveLink);
 setActiveLink();
 
   
-});
+  //CLOUDINARY PHOTO UPLOAD
+  
+  const uploadArea  = $("#upload-area");
+  const uploadBtn   = $("#upload-btn");
+  const photoInput  = $("#photo-input");
+  const uploadList  = $("#upload-list");
+ 
+  if (configEl && uploadArea && uploadBtn && photoInput) {
+    const CLOUD  = configEl.dataset.cloudinaryCloud;
+    const PRESET = configEl.dataset.cloudinaryPreset;
+ 
+    if (!CLOUD || CLOUD === "YOUR_CLOUD_NAME") {
+      console.warn(
+        "[urinvited] Cloudinary not configured.\n" +
+        "Set data-cloudinary-cloud and data-cloudinary-preset on #cloudinary-config in index.html."
+      );
+    }
+ 
+    function createUploadItem(file) {
+      if (uploadList) uploadList.hidden = false;
+      const item = document.createElement("div");
+      item.className = "upload-item";
+ 
+      const thumb = document.createElement("img");
+      thumb.className = "upload-item-thumb";
+      thumb.alt = file.name;
+      const reader = new FileReader();
+      reader.onload = e => { thumb.src = e.target.result; };
+      reader.readAsDataURL(file);
+ 
+      const info   = document.createElement("div");
+      info.className = "upload-item-info";
+ 
+      const name   = document.createElement("div");
+      name.className = "upload-item-name";
+      name.textContent = file.name;
+ 
+      const status = document.createElement("div");
+      status.className = "upload-item-status uploading";
+      status.textContent = "Μεταφόρτωση...";
+ 
+      const icon = document.createElement("span");
+      icon.className = "upload-item-icon";
+      icon.textContent = "⏳";
+ 
+      info.append(name, status);
+      item.append(thumb, info, icon);
+      uploadList.appendChild(item);
+ 
+      return { status, icon };
+    }
+ 
+    async function uploadFile(file) {
+      const { status, icon } = createUploadItem(file);
+      const fd = new FormData();
+      fd.append("file", file);
+      fd.append("upload_preset", PRESET);
+      fd.append("folder", "wedding_kk_2026");
+ 
+      try {
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,
+          { method: "POST", body: fd }
+        );
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        status.textContent = "Ανέβηκε ✓";
+        status.className = "upload-item-status done";
+        icon.textContent = "✅";
+      } catch (err) {
+        console.error("[urinvited] Upload error:", err);
+        status.textContent = "Σφάλμα — δοκιμάστε ξανά";
+        status.className = "upload-item-status error";
+        icon.textContent = "❌";
+      }
+    }
+ 
+    function handleFiles(files) {
+      if (!files?.length) return;
+      Array.from(files).forEach(f => {
+        if (!f.type.startsWith("image/")) return;
+        if (f.size > 20 * 1024 * 1024) {
+          alert(`"${f.name}" υπερβαίνει τα 20MB. Παρακαλούμε επιλέξτε μικρότερο αρχείο.`);
+          return;
+        }
+        uploadFile(f);
+      });
+    }
+ 
+    uploadBtn.addEventListener("click", e => { e.stopPropagation(); photoInput.click(); });
+    uploadArea.addEventListener("click", () => photoInput.click());
+    photoInput.addEventListener("change", () => { handleFiles(photoInput.files); photoInput.value = ""; });
+ 
+    uploadArea.addEventListener("dragover",  e => { e.preventDefault(); uploadArea.classList.add("drag-over"); });
+    uploadArea.addEventListener("dragleave", () => uploadArea.classList.remove("drag-over"));
+    uploadArea.addEventListener("drop", e => {
+      e.preventDefault();
+      uploadArea.classList.remove("drag-over");
+      handleFiles(e.dataTransfer.files);
+    });
+  }
+ 
+}); // DOMContentLoaded
+ 
