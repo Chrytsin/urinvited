@@ -296,7 +296,7 @@ const configEl   = $("#cloudinary-config");
       const fd = new FormData();
       fd.append("file", file);
       fd.append("upload_preset", PRESET);
-      fd.append("folder", "wedding_kk_2026");
+      fd.append("folder", "uploads");
       fd.append("tags", "wedding_kk_2026");
       
       try {
