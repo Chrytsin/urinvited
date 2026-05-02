@@ -203,17 +203,20 @@ const galleryGrid  = document.getElementById("gallery-grid");
 const galleryEmpty = document.getElementById("gallery-empty");
 const GALLERY_TAG  = "wedding_kk_2026";
 
-function addToGallery(url) {
+  function addToGallery(thumbUrl, fullUrl) {
   if (!galleryGrid) return;
   if (galleryEmpty) galleryEmpty.remove();
   const a = document.createElement("a");
-  a.href = url; a.target = "_blank"; a.rel = "noopener";
+  a.href = fullUrl || thumbUrl;
   a.className = "gallery-item";
+  a.dataset.full = fullUrl || thumbUrl;
   const img = document.createElement("img");
-  img.src = url; img.loading = "lazy"; img.alt = "Φωτογραφία γάμου";
+  img.src = thumbUrl;
+  img.loading = "lazy";
+  img.alt = "Φωτογραφία γάμου";
   a.appendChild(img);
   galleryGrid.prepend(a);
-}
+  }
 
 async function loadGallery() {
   if (!galleryGrid) return;
@@ -228,9 +231,11 @@ async function loadGallery() {
     data.resources
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
       .forEach(r => {
-        const url = `https://res.cloudinary.com/${cloud}/image/upload/w_400,h_400,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
-        addToGallery(url);
-      });
+  const base = `https://res.cloudinary.com/${cloud}/image/upload`;
+  const thumb = `${base}/w_400,h_400,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
+  const full  = `${base}/q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
+  addToGallery(thumb, full);
+});
   } catch (err) {
     console.warn("[urinvited] Gallery load failed:", err);
   }
@@ -309,7 +314,11 @@ const configEl   = $("#cloudinary-config");
         status.className = "upload-item-status done";
         icon.textContent = "✅";
         const data = await res.json();
-        addToGallery(data.secure_url);
+        const thumbUrl = data.secure_url.replace(
+  "/upload/",
+  "/upload/w_400,h_400,c_fill,q_auto,f_auto/"
+);
+addToGallery(thumbUrl, data.secure_url);
       } catch (err) {
         console.error("[urinvited] Upload error:", err);
         status.textContent = "Σφάλμα — δοκιμάστε ξανά";
@@ -343,6 +352,29 @@ const configEl   = $("#cloudinary-config");
     });
   }
 
+//================ LIGHTBOX ================
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const lightboxClose = document.getElementById("lightbox-close");
 
+if (lightbox && galleryGrid) {
+  galleryGrid.addEventListener("click", (e) => {
+    const a = e.target.closest(".gallery-item");
+    if (!a) return;
+    e.preventDefault();
+    lightboxImg.src = a.dataset.full || a.href;
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  });
+  const close = () => {
+    lightbox.classList.remove("is-open");
+    lightboxImg.src = "";
+    document.body.style.overflow = "";
+  };
+  lightboxClose.addEventListener("click", close);
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) close(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+}
+  
 }); // DOMContentLoaded
  
