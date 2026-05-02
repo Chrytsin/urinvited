@@ -565,7 +565,7 @@ footer {
   transition: opacity 0.4s ease, transform 0.4s var(--ease-out);
 }
 
-.nav-overlay.open {
+.nav-overlay.is-open {
   opacity: 1; pointer-events: auto; transform: translateY(0);
 }
 
@@ -596,14 +596,14 @@ footer {
 }
 
 /* Stagger mobile links in */
-.nav-overlay.open .nav-mobile li:nth-child(1) a { animation: fadeUp 0.4s 0.05s both; }
-.nav-overlay.open .nav-mobile li:nth-child(2) a { animation: fadeUp 0.4s 0.10s both; }
-.nav-overlay.open .nav-mobile li:nth-child(3) a { animation: fadeUp 0.4s 0.15s both; }
-.nav-overlay.open .nav-mobile li:nth-child(4) a { animation: fadeUp 0.4s 0.20s both; }
-.nav-overlay.open .nav-mobile li:nth-child(5) a { animation: fadeUp 0.4s 0.25s both; }
-.nav-overlay.open .nav-mobile li:nth-child(6) a { animation: fadeUp 0.4s 0.30s both; }
-.nav-overlay.open .nav-mobile li:nth-child(7) a { animation: fadeUp 0.4s 0.35s both; }
-.nav-overlay.open .nav-mobile li:nth-child(8) a { animation: fadeUp 0.4s 0.40s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(1) a { animation: fadeUp 0.4s 0.05s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(2) a { animation: fadeUp 0.4s 0.10s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(3) a { animation: fadeUp 0.4s 0.15s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(4) a { animation: fadeUp 0.4s 0.20s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(5) a { animation: fadeUp 0.4s 0.25s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(6) a { animation: fadeUp 0.4s 0.30s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(7) a { animation: fadeUp 0.4s 0.35s both; }
+.nav-overlay.is-open .nav-mobile li:nth-child(8) a { animation: fadeUp 0.4s 0.40s both; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
