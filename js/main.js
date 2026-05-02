@@ -20,13 +20,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  window.addEventListener("scroll", revealOnScroll);
-  revealOnScroll();
+  let ticking = false;
+window.addEventListener("scroll", () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => {
+    revealOnScroll(); setActiveLink(); /* header shadow */
+    ticking = false;
+  });
+});
+
 
 
 
   //================ RSRV form ================ 
   const form = document.getElementById("rsvp-form");
+  document.getElementById("rsvp-attendance").addEventListener("change", e => {
+  document.getElementById("guests-field").hidden = e.target.value !== "yes";
+});
+  
   if (!form) return;
 
   
@@ -91,6 +103,7 @@ if (daysEl && hoursEl && minutesEl && secondsEl) {
       hoursEl.textContent = "00";
       minutesEl.textContent = "00";
       secondsEl.textContent = "00";
+      clearInterval(updateCountdown);
       return;
     }
 
