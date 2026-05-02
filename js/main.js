@@ -198,6 +198,44 @@ const setActiveLink = () => {
 window.addEventListener("scroll", setActiveLink);
 setActiveLink();
 
+//================ GALLERY ================
+const galleryGrid  = document.getElementById("gallery-grid");
+const galleryEmpty = document.getElementById("gallery-empty");
+const GALLERY_TAG  = "wedding_kk_2026";
+
+function addToGallery(url) {
+  if (!galleryGrid) return;
+  if (galleryEmpty) galleryEmpty.remove();
+  const a = document.createElement("a");
+  a.href = url; a.target = "_blank"; a.rel = "noopener";
+  a.className = "gallery-item";
+  const img = document.createElement("img");
+  img.src = url; img.loading = "lazy"; img.alt = "Φωτογραφία γάμου";
+  a.appendChild(img);
+  galleryGrid.prepend(a);
+}
+
+async function loadGallery() {
+  if (!galleryGrid) return;
+  try {
+    const cloud = document.getElementById("cloudinary-config")?.dataset.cloudinaryCloud;
+    if (!cloud) return;
+    const res = await fetch(`https://res.cloudinary.com/${cloud}/image/list/${GALLERY_TAG}.json`);
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data.resources?.length) return;
+    if (galleryEmpty) galleryEmpty.remove();
+    data.resources
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .forEach(r => {
+        const url = `https://res.cloudinary.com/${cloud}/image/upload/w_400,h_400,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
+        addToGallery(url);
+      });
+  } catch (err) {
+    console.warn("[urinvited] Gallery load failed:", err);
+  }
+}
+loadGallery();
   
 //================ CLOUDINARY PHOTO UPLOAD ================
 const $ = (sel) => document.querySelector(sel);
@@ -259,7 +297,8 @@ const configEl   = $("#cloudinary-config");
       fd.append("file", file);
       fd.append("upload_preset", PRESET);
       fd.append("folder", "wedding_kk_2026");
- 
+      fd.append("tags", "wedding_kk_2026");
+      
       try {
         const res = await fetch(
           `https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`,
@@ -269,6 +308,8 @@ const configEl   = $("#cloudinary-config");
         status.textContent = "Ανέβηκε ✓";
         status.className = "upload-item-status done";
         icon.textContent = "✅";
+        const data = await res.json();
+        addToGallery(data.secure_url);
       } catch (err) {
         console.error("[urinvited] Upload error:", err);
         status.textContent = "Σφάλμα — δοκιμάστε ξανά";
@@ -301,6 +342,7 @@ const configEl   = $("#cloudinary-config");
       handleFiles(e.dataTransfer.files);
     });
   }
- 
+
+
 }); // DOMContentLoaded
  
