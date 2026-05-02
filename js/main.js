@@ -194,14 +194,14 @@ window.addEventListener("scroll", setActiveLink);
 setActiveLink();
 
   
-  //CLOUDINARY PHOTO UPLOAD
-  
-  const uploadArea  = $("#upload-area");
-  const uploadBtn   = $("#upload-btn");
-  const photoInput  = $("#photo-input");
-  const uploadList  = $("#upload-list");
-  const $ = (sel) => document.querySelector(sel);
-  const configEl = $("#cloudinary-config");
+//================ CLOUDINARY PHOTO UPLOAD ================
+const $ = (sel) => document.querySelector(sel);
+
+const uploadArea = $("#upload-area");
+const uploadBtn  = $("#upload-btn");
+const photoInput = $("#photo-input");
+const uploadList = $("#upload-list");
+const configEl   = $("#cloudinary-config");
   
   if (configEl && uploadArea && uploadBtn && photoInput) {
     const CLOUD  = configEl.dataset.cloudinaryCloud;
