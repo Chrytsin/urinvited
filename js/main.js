@@ -115,31 +115,37 @@ if (daysEl && hoursEl && minutesEl && secondsEl) {
 
 
 //================ Navigation menu ===================
-const toggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector(".nav");
+
+const toggle  = document.getElementById("menu-toggle");
+const overlay = document.getElementById("nav-overlay");
 const header = document.querySelector(".site-header");
 
-if (toggle && nav) {
-  toggle.addEventListener("click", () => {
-    nav.classList.toggle("open");
-  });
 
-  nav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("open");
-    });
+if (toggle && overlay) {
+  toggle.addEventListener("click", () => {
+    const open = overlay.classList.toggle("is-open");
+    toggle.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open);
+    document.body.style.overflow = open ? "hidden" : "";
   });
+  overlay.querySelectorAll("a").forEach(a =>
+    a.addEventListener("click", () => {
+      overlay.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      document.body.style.overflow = "";
+    })
+  );
 }
 
 // Close menu when clicking outside (mobile)
 document.addEventListener("click", (e) => {
   if (
-    nav &&
+    overlay &&
     toggle &&
-    !nav.contains(e.target) &&
+    !overlay.contains(e.target) &&
     !toggle.contains(e.target)
   ) {
-    nav.classList.remove("open");
+    overlay.classList.remove("open");
   }
 });
 
@@ -181,7 +187,9 @@ setActiveLink();
   const uploadBtn   = $("#upload-btn");
   const photoInput  = $("#photo-input");
   const uploadList  = $("#upload-list");
- 
+  const $ = (sel) => document.querySelector(sel);
+  const configEl = $("#cloudinary-config");
+  
   if (configEl && uploadArea && uploadBtn && photoInput) {
     const CLOUD  = configEl.dataset.cloudinaryCloud;
     const PRESET = configEl.dataset.cloudinaryPreset;
