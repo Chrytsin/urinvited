@@ -30,7 +30,7 @@ window.addEventListener("scroll", () => {
   });
 });
 
-
+revealOnScroll();
 
 
   //================ RSRV form ================ 
@@ -41,7 +41,6 @@ window.addEventListener("scroll", () => {
   
   if (!form) return;
 
-  
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
   
@@ -51,25 +50,29 @@ window.addEventListener("scroll", () => {
     button.textContent = "Αποστολή...";
     button.disabled = true;
   
-    try {
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: {
-          Accept: "application/json"
-        }
-      });
-  
-      if (response.ok) {
-        button.textContent = "Εστάλη ✨";
-        form.reset();
-      } else {
-        throw new Error("Submission failed");
-      }
-  
-    } catch (error) {
-      button.textContent = "Σφάλμα 😕";
-    }
+    const feedback = document.getElementById("rsvp-feedback");
+    
+  try {
+  const response = await fetch(form.action, {
+    method: "POST",
+    body: new FormData(form),
+    headers: { Accept: "application/json" }
+  });
+  if (response.ok) {
+    button.textContent = "Εστάλη ✨";
+    feedback.hidden = false;
+    feedback.className = "rsvp-feedback success";
+    feedback.textContent = "Ευχαριστούμε! Η απάντησή σας καταχωρήθηκε.";
+    form.reset();
+  } else {
+    throw new Error("Submission failed");
+  }
+} catch (error) {
+  button.textContent = "Σφάλμα 😕";
+  feedback.hidden = false;
+  feedback.className = "rsvp-feedback error";
+  feedback.textContent = "Κάτι πήγε στραβά. Δοκιμάστε ξανά.";
+}
   
     setTimeout(() => {
       button.textContent = originalText;
@@ -158,7 +161,9 @@ document.addEventListener("click", (e) => {
     !overlay.contains(e.target) &&
     !toggle.contains(e.target)
   ) {
-    overlay.classList.remove("open");
+    overlay.classList.remove("is-open");
+    toggle.classList.remove("is-open");
+    document.body.style.overflow = "";
   }
 });
 
