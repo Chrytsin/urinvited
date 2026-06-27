@@ -352,29 +352,52 @@ addToGallery(thumbUrl, data.secure_url);
     });
   }
 
-//================ LIGHTBOX ================
-const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightbox-img");
-const lightboxClose = document.getElementById("lightbox-close");
+// LIGHTBOX 
+const lightbox       = document.getElementById("lightbox");
+const lightboxImg    = document.getElementById("lightbox-img");
+const lightboxClose  = document.getElementById("lightbox-close");
+const lightboxPrev   = document.getElementById("lightbox-prev");
+const lightboxNext   = document.getElementById("lightbox-next");
+const lightboxCount  = document.getElementById("lightbox-counter");
 
-if (lightbox && galleryGrid) {
+let lbIndex = 0;
+
+function getItems(){
+  return Array.from(document.querySelectorAll("#gallery-grid .gallery-item"));
+}
+function showAt(i){
+  const items = getItems();
+  if (!items.length) return;
+  lbIndex = (i + items.length) % items.length;
+  const a = items[lbIndex];
+  // ζητάμε medium-res απευθείας από Cloudinary → όχι τεράστιες διαστάσεις
+  const src = a.dataset.full || a.href;
+  const display = src.replace("/upload/", "/upload/w_1400,h_1400,c_limit,q_auto,f_auto/");
+  lightboxImg.src = display;
+  lightboxCount.textContent = `${lbIndex + 1} / ${items.length}`;
+}
+function openLb(i){ showAt(i); lightbox.classList.add("is-open"); document.body.style.overflow = "hidden"; }
+function closeLb(){ lightbox.classList.remove("is-open"); lightboxImg.src = ""; document.body.style.overflow = ""; }
+
+if (lightbox && galleryGrid){
   galleryGrid.addEventListener("click", (e) => {
     const a = e.target.closest(".gallery-item");
     if (!a) return;
     e.preventDefault();
-    lightboxImg.src = a.dataset.full || a.href;
-    lightbox.classList.add("is-open");
-    document.body.style.overflow = "hidden";
+    const items = getItems();
+    openLb(items.indexOf(a));
   });
-  const close = () => {
-    lightbox.classList.remove("is-open");
-    lightboxImg.src = "";
-    document.body.style.overflow = "";
-  };
-  lightboxClose.addEventListener("click", close);
-  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) close(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+  lightboxClose.addEventListener("click", closeLb);
+  lightboxPrev .addEventListener("click", () => showAt(lbIndex - 1));
+  lightboxNext .addEventListener("click", () => showAt(lbIndex + 1));
+  lightbox.addEventListener("click", (e) => { if (e.target === lightbox) closeLb(); });
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape")      closeLb();
+    if (e.key === "ArrowLeft")   showAt(lbIndex - 1);
+    if (e.key === "ArrowRight")  showAt(lbIndex + 1);
+  });
+  // prevent download
+  lightboxImg.addEventListener("contextmenu", e => e.preventDefault());
+  lightboxImg.addEventListener("dragstart",   e => e.preventDefault());
 }
-  
-}); // DOMContentLoaded
- 
