@@ -12,6 +12,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Κλείσιμο">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Προηγούμενη">&#10094;</button>
+  <img id="lightbox-img" alt="" draggable="false" oncontextmenu="return false;">
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Επόμενη">&#10095;</button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
   
 <body>
   <!-- Floating petals -->
